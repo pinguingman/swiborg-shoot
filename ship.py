@@ -1,6 +1,7 @@
 import pygame
 from math import atan2 as arctan2
 from bullet import Bullet
+from help_functions import collision_test_circle
 
 class Ship():
     def __init__(self, screen, settings):
@@ -10,10 +11,9 @@ class Ship():
         self.screen_rect = screen.get_rect()
         #load ship image 
         self.original_image = pygame.image.load(settings.image_path + settings.file_prefix + settings.hero_path)
-        ##self.original_image.centerx = settings.screen_size[0] / 2
-        ##self.original_image.centery = settings.screen_size[1] / 2
         self.rect = self.original_image.get_rect()
         self.image = self.original_image
+        self.radius = self.rect.width / 2.0
         #set ship start point
         self.rect.centerx = self.screen_rect.centerx
         self.rect.centery = self.screen_rect.centery
@@ -24,12 +24,13 @@ class Ship():
         self.moving_left = False
         self.moving_up = False
         self.moving_down = False
-
         #ship rotation
         self.rotation = 0
         self.mouse_pos = (0,0)
         #ship bullets
         self.bullets = []
+        #ship stats
+        self.hp = float(settings.ship_hp)
 
     def shoot(self):
         """create bullet obj"""
@@ -45,6 +46,12 @@ class Ship():
                         enemys.remove(enemy)
                     self.bullets.remove(bullet)
 
+    def under_attack(self, enemys):
+        """check if hero is under attack"""
+        for enemy in enemys:
+            if collision_test_circle(self.centerx, self.centery, self.radius, 
+                enemy.rect.centerx, enemy.rect.centery, enemy.rect.width / 2.0):
+                self.hp -= enemy.damage
 
     def show(self):
         """draw ship"""
@@ -80,5 +87,5 @@ class Ship():
         angle = (arctan2((y2-y1),(x2-x1)) * 180.0 / 3.1416) - 90
         self.image = pygame.transform.rotozoom(self.original_image, angle, 1)
         self.rect = self.image.get_rect()
-        self.rect.centerx = int(self.centerx)
-        self.rect.centery = int(self.centery)
+        self.rect.centerx = self.centerx
+        self.rect.centery = self.centery

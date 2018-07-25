@@ -12,7 +12,6 @@ class Enemy():
         self.settings = settings
         self.image = pygame.image.load(settings.image_path + settings.file_prefix + settings.enemy_path)
         self.image_damaged = pygame.image.load(settings.image_path + settings.file_prefix + settings.enemy_damaged_path)
-
         self.rect = self.image.get_rect()
         #coordinates
         seed()
@@ -24,6 +23,7 @@ class Enemy():
         self.hp = settings.enemy_hp
         self.being_damaged = 0
         self.speed = settings.enemy_speed 
+        self.damage = settings.enemy_damage
 
     def show(self):
         """show enemy""" 

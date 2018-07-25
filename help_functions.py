@@ -20,3 +20,18 @@ def calculate_unit_vector(x0, y0, x1, y1):
     v = (x1 - x0, y1 - y0)
     vM = sqrt(v[0] ** 2 + v[1] ** 2)
     return (v[0] / vM, v[1] / vM)
+
+def remap(value, minf, maxf, mins, maxs):
+	"""remap a number from one range to another"""
+	return mins + (value - minf) * (maxs - mins) / (maxf - minf);
+
+def dist(x0, y0, x1, y1):
+	"""calculate dist between 2 dots"""
+	return float(sqrt((x0 - x1) ** 2 + (y0 - y1) ** 2))
+
+def collision_test_circle(x0, y0, r0, x1, y1, r1):
+	"""test colllision between 2 circles"""
+	if dist(x0, y0, x1, y1) < float(r0 + r1):
+		return True
+	else:
+		return False

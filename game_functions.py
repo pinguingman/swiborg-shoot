@@ -34,6 +34,8 @@ def check_keydown_events(event, ship):
         ship.moving_up = True
     if event.key == pygame.K_DOWN or event.key == pygame.K_s:
         ship.moving_down = True
+    if event.key == pygame.K_r:
+        print("Oh hi Mark")
 
 def check_keyup_events(event, ship):
     """work with keyup events"""
@@ -62,7 +64,7 @@ def next_lvl(screen, settings, enemys):
                 enemys.append(enemy.EnemyBoss(screen, settings))
     settings.lvl_number += 1
 
-def update_screen(settings, screen, ship, enemys):
+def update_screen(settings, screen, ship, enemys, interface):
     """updates screen and show new screen"""
     screen.fill(settings.bg_color)    
     for bullet in ship.bullets:
@@ -78,4 +80,9 @@ def update_screen(settings, screen, ship, enemys):
     for enemy in enemys:
         enemy.update(ship)
         enemy.show()
+    ship.under_attack(enemys)
+
+    interface.update(ship)
+    interface.show()
+
 

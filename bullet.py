@@ -32,4 +32,4 @@ class Bullet():
 
     def show(self):
         """draw ship"""
-        pygame.draw.circle(self.screen, self.color, (self.rect.x, self.rect.y), int(self.bullet_size / 2))
+        pygame.draw.circle(self.screen, self.color, (self.rect.x, self.rect.y), int(self.bullet_size / 2.0))
